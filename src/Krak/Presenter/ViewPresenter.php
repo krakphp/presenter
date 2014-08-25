@@ -6,7 +6,7 @@ use RuntimeException;
 
 class ViewPresenter extends AbstractPresenter
 {
-    private static $cfg;
+    protected static $cfg;
     
     protected $view_file    = '';
     protected $view_output  = '';
@@ -35,14 +35,14 @@ class ViewPresenter extends AbstractPresenter
      */
     public function build()
     {
-        if (!self::$cfg) {
+        if (!static::$cfg) {
             throw new RuntimeException('ViewPresenter config has not been set');
         }
     
         $file = sprintf(
             "%s/%s.%s",
             static::$cfg['view_path'],
-            $file,
+            $this->view_file,
             static::$cfg['file_ext']
         );
         
@@ -50,9 +50,8 @@ class ViewPresenter extends AbstractPresenter
         
         require $file;
         
-        $this->view_ouput = ob_get_clean();
+        $this->view_output = ob_get_clean();
         return $this;
-        
     }
     
     /**

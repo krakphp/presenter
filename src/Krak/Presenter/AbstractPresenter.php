@@ -41,12 +41,12 @@ abstract class AbstractPresenter implements Presenter
     /**
      * @inheritDoc
      */
-    public function clear();
+    abstract public function clear();
     
     /**
      * @inheritDoc
      */
-    public function __toString();
+    abstract public function __toString();
     
     /**
      * Returns all of the children presenters for the current presenter

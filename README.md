@@ -136,7 +136,6 @@ Using the Home\Index Presenter created above, here's what a view file could look
 <div id="content">
     <h1><?=$this->header?></h1>
     
-    <?php // escape() is inherited from View\Common ?>
     <p><?=$this->escape($this->info)?></p>
     
     <div class="list">
