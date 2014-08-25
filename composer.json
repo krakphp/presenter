@@ -1,0 +1,27 @@
+{
+    "name": "krak/presenter",
+    "description": "Small and simple implementation of the presenter design pattern",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/bighead-dev/krak-presenter",
+    "keywords": [
+        "viewmodel",
+        "view",
+        "model",
+        "presenter"
+    ],
+    "authors": [
+        {
+            "name": "RJ Garcia",
+            "email": "rj@bighead.net"
+        }
+    ],
+    "require": {
+        "php": "~5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Krak\Presenter": "src"
+        }
+    },
+}
