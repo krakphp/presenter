@@ -38,20 +38,35 @@ class ViewPresenter extends AbstractPresenter
         if (!static::$cfg) {
             throw new RuntimeException('ViewPresenter config has not been set');
         }
+        
+        $file = $this->getViewFilePath();
+        
+        if (!file_exists($file))
+        {
+            throw new RuntimeException(
+                sprintf(
+                    "View file '%s' does not exist.",
+                    $file
+                )
+            );
+        }
+        
+        ob_start();
+        
+        include $file;
+        
+        $this->view_output = ob_get_clean();
+        return $this;
+    }
     
-        $file = sprintf(
+    protected function getViewFilePath()
+    {
+        return sprintf(
             "%s/%s.%s",
             static::$cfg['view_path'],
             $this->view_file,
             static::$cfg['file_ext']
         );
-        
-        ob_start();
-        
-        require $file;
-        
-        $this->view_output = ob_get_clean();
-        return $this;
     }
     
     /**
