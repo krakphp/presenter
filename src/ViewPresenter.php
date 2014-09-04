@@ -39,9 +39,9 @@ class ViewPresenter extends AbstractPresenter
             throw new RuntimeException('ViewPresenter config has not been set');
         }
         
-        $file = $this->getViewFilePath();
+        $path = $this->getViewPath($this->view_file);
         
-        if (!file_exists($file))
+        if (!file_exists($path))
         {
             throw new RuntimeException(
                 sprintf(
@@ -53,18 +53,22 @@ class ViewPresenter extends AbstractPresenter
         
         ob_start();
         
-        include $file;
+        include $path;
         
         $this->view_output = ob_get_clean();
         return $this;
     }
     
-    protected function getViewFilePath()
+    /**
+     * Gets the full path for a view file name
+     * @return string
+     */
+    public function getViewPath($view_file)
     {
         return sprintf(
             "%s/%s.%s",
             static::$cfg['view_path'],
-            $this->view_file,
+            $view_file,
             static::$cfg['file_ext']
         );
     }
