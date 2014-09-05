@@ -15,10 +15,19 @@ class ViewPresenter extends AbstractPresenter
      * Sets the view file name
      * @return $this
      */
-    public function setFile($file)
+    public function setViewFile($file)
     {
         $this->view_file = $file;
-        return $thsi;
+        return $this;
+    }
+    
+    /**
+     * Returns the view file name
+     * @return string
+     */
+    public function getViewFile()
+    {
+        return $this->view_file;
     }
     
     /**
@@ -46,7 +55,7 @@ class ViewPresenter extends AbstractPresenter
             throw new RuntimeException(
                 sprintf(
                     "View file '%s' does not exist.",
-                    $file
+                    $path
                 )
             );
         }
