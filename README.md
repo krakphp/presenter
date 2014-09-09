@@ -31,7 +31,7 @@ class Index extends Presenter\ViewPresenter
     
     public function __construct()
     {
-        $this->setFile($this->getViewFile());
+        $this->initViewFile();
     }
     
     public function setHeader($header)
@@ -66,7 +66,7 @@ class Index extends Presenter\ViewPresenter
         return htmlspecialchars($data);
     }
     
-    public function getViewFile()
+    private function initViewFile()
     {
         if ($global_var_is_set) {
             return 'view-file-1';
