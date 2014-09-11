@@ -3,8 +3,8 @@
 namespace Krak\Presenter;
 
 /**
- * Abstract presenter class that also implements a tree of
- * presenters. The tree can only be traversed downwards.
+ * Abstract Presenter
+ * This implements a few helper functions
  */
 abstract class AbstractPresenter implements Presenter
 {
@@ -47,13 +47,4 @@ abstract class AbstractPresenter implements Presenter
      * @inheritDoc
      */
     abstract public function __toString();
-    
-    /**
-     * Returns all of the children presenters for the current presenter
-     * @return array An array of presenters
-     */
-    public function getChildren()
-    {
-        return array();
-    }
 }

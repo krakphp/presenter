@@ -44,10 +44,6 @@ class ViewPresenter extends AbstractPresenter
      */
     public function build()
     {
-        if (!static::$cfg) {
-            throw new RuntimeException('ViewPresenter config has not been set');
-        }
-        
         $path = $this->getViewPath($this->view_file);
         
         if (!file_exists($path))
@@ -74,6 +70,10 @@ class ViewPresenter extends AbstractPresenter
      */
     public function getViewPath($view_file)
     {
+        if (!static::$cfg) {
+            throw new RuntimeException('ViewPresenter config has not been set');
+        }
+    
         return sprintf(
             "%s/%s.%s",
             static::$cfg['view_path'],
