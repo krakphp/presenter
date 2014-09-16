@@ -46,14 +46,8 @@ class ViewPresenter extends AbstractPresenter
     {
         $path = $this->getViewPath($this->view_file);
         
-        if (!file_exists($path))
-        {
-            throw new RuntimeException(
-                sprintf(
-                    "View file '%s' does not exist.",
-                    $path
-                )
-            );
+        if (!file_exists($path)) {
+            throw new Exception\FileNotFoundException($path);
         }
         
         ob_start();
