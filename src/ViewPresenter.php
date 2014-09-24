@@ -44,7 +44,7 @@ class ViewPresenter extends AbstractPresenter
      */
     public function build()
     {
-        $path = $this->getViewPath($this->view_file);
+        $path = $this->getViewPath($this->getViewFile());
         
         if (!file_exists($path)) {
             throw new Exception\FileNotFoundException($path);
