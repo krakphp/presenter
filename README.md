@@ -31,7 +31,9 @@ class Index extends Presenter\ViewPresenter
     
     public function __construct()
     {
-        $this->initViewFile();
+        $this->setViewFile(
+            $this->initViewFile()
+        );
     }
     
     public function setHeader($header)
