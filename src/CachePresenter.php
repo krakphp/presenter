@@ -5,6 +5,11 @@ namespace Krak\Presenter;
 use Doctrine\Common\Cache\Cache;
 use Krak\Presenter\View\CacheableView;
 
+/**
+ * Cache Presenter
+ * A presenter decorator that will cache any object that implements
+ * the CacheableView interface
+ */
 class CachePresenter implements Presenter
 {
     /**
@@ -17,12 +22,20 @@ class CachePresenter implements Presenter
      */
     protected $cache;
 
+    /**
+     * @param Presenter $presenter
+     * @param Cache $cache
+     */
     public function __construct(Presenter $presenter, Cache $cache)
     {
         $this->presenter = $presenter;
         $this->cache = $cache;
     }
 
+    /**
+     * @param mixed $view
+     * @return string
+     */
     public function present($view)
     {
         if ($view instanceof CacheableView == false) {

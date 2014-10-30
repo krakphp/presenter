@@ -4,6 +4,9 @@ namespace Krak\Presenter\View;
 
 trait TreeViewTrait
 {
+    /**
+     * @var string
+     */
     private $content;
 
     /**

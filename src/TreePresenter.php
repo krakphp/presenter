@@ -4,6 +4,12 @@ namespace Krak\Presenter;
 
 use Krak\Presenter\View\TreeView;
 
+/**
+ * Tree Presenter
+ * a presenter decorator that will traverse a hierarchy/tree of views present
+ * their data and then set the data into the view to be used. It then returns
+ * the root views content.
+ */
 class TreePresenter implements Presenter
 {
     /**
@@ -11,11 +17,18 @@ class TreePresenter implements Presenter
      */
     protected $presenter;
 
+    /**
+     * @param Presenter $p
+     */
     public function __construct(Presenter $p)
     {
         $this->presenter = $p;
     }
 
+    /**
+     * @param mixed $view
+     * @return string
+     */
     public function present($view)
     {
         if ($view instanceof TreeView == false) {

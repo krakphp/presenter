@@ -10,6 +10,10 @@ class AnonymousView implements View
 {
     use ViewTrait;
 
+    /**
+     * @param string $view_file
+     * @param array $data
+     */
     public function __construct($view_file, $data)
     {
         $this->setViewFile($view_file);
@@ -19,6 +23,12 @@ class AnonymousView implements View
         }
     }
 
+    /**
+     * factory method for creating an anonymous view
+     * @param string $view_file
+     * @param array $data
+     * @return AnonymousView
+     */
     public static function create($view_file, $data = [])
     {
         return new self($view_file, $data);

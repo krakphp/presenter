@@ -21,16 +21,27 @@ class MockPresenter implements Presenter
         $this->storage = new SplObjectStorage();
     }
 
+    /**
+     * @return SplObjectStorage
+     */
     public function getStorage()
     {
         return $this->storage;
     }
 
+    /**
+     * @param mixed $obj
+     * @param string $data
+     */
     public function mock($obj, $data)
     {
         $this->storage->attach($obj, $data);
     }
 
+    /**
+     * @param mixed $obj
+     * @return string
+     */
     public function present($obj)
     {
         if (!isset($this->storage[$obj])) {
