@@ -19,9 +19,17 @@
     "require": {
         "php": "~5.3"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
     "autoload": {
         "psr-4": {
             "Krak\\Presenter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Krak\\Tests\\": "tests"
         }
     }
 }
