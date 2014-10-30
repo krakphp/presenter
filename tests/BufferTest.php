@@ -35,4 +35,15 @@ class BufferTest extends TestCase
 
         $this->assertEquals('contents', $buf->getContents());
     }
+
+    public function testBuffering()
+    {
+        $buf = new Buffer();
+
+        $buf->start();?>
+data
+<?php $buf->end();
+
+        $this->assertEquals("data\n", $buf->getContents());
+    }
 }

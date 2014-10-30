@@ -34,4 +34,20 @@ class Buffer
     {
         $this->contents .= $contents;
     }
+
+    /**
+     * Create an output buffer
+     */
+    public function start()
+    {
+        ob_start();
+    }
+
+    /**
+     * Clean the buffer and append the contents
+     */
+    public function end()
+    {
+        $this->append(ob_get_clean());
+    }
 }
