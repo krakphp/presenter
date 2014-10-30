@@ -2,9 +2,9 @@
 
 namespace Krak\Presenter;
 
-use Krak\Presenter\View\HierarchialView;
+use Krak\Presenter\View\TreeView;
 
-class HierarchialViewPresenter implements Presenter
+class TreePresenter implements Presenter
 {
     /**
      * @var Presenter
@@ -18,7 +18,7 @@ class HierarchialViewPresenter implements Presenter
 
     public function present($view)
     {
-        if ($view instanceof HierarchialView == false) {
+        if ($view instanceof TreeView == false) {
             return $this->presenter->present($view);
         }
 

@@ -2,10 +2,10 @@
 
 namespace Krak\Presenter\View;
 
-interface HierarchialView extends View
+interface TreeView
 {
     /**
-     * @return HierarchialView[]
+     * @return TreeView[]
      */
     public function getChildren();
 

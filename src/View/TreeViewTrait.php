@@ -2,14 +2,12 @@
 
 namespace Krak\Presenter\View;
 
-trait HierarchialViewTrait
+trait TreeViewTrait
 {
-    use ViewTrait;
-
     private $content;
 
     /**
-     * @return HierarchialView[]
+     * @return TreeView[]
      */
     public function getChildren()
     {

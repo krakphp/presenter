@@ -5,7 +5,7 @@ namespace Krak\Presenter;
 use Doctrine\Common\Cache\Cache;
 use Krak\Presenter\View\CacheableView;
 
-class CacheViewPresenter implements Presenter
+class CachePresenter implements Presenter
 {
     /**
      * @var Presenter
@@ -33,7 +33,7 @@ class CacheViewPresenter implements Presenter
 
         $contents = $this->cache->fetch($key);
 
-        if ($contents === false) {
+        if ($contents !== false) {
             return $contents;
         }
 

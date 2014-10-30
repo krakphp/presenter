@@ -23,6 +23,6 @@ class Buffer
 
     public function append($contents)
     {
-        $this->contents += $contents;
+        $this->contents .= $contents;
     }
 }

@@ -13,5 +13,5 @@ interface Presenter
      * @param mixed $data
      * @return string
      */
-    public function present($data)
+    public function present($data);
 }

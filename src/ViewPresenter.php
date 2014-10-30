@@ -49,7 +49,7 @@ class ViewPresenter implements Presenter
 
     public function setExtension($ext)
     {
-        $this->ext = ($ext) ? '.' . $ext : '';
+        $this->ext = $ext;
     }
 
     public function getExtension()
@@ -70,7 +70,9 @@ class ViewPresenter implements Presenter
             );
         }
 
-        $file = $view->getViewFile() . $this->ext;
+        $ext = ($this->ext) ? '.' . $this->ext : '';
+
+        $file = $view->getViewFile() . $ext;
 
         try {
             $file = $this->locator->locate($file);
@@ -95,6 +97,6 @@ class ViewPresenter implements Presenter
 
         include $file;
 
-        return ob_get_contents();
+        return ob_get_clean();
     }
 }
