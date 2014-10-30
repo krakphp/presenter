@@ -31,17 +31,26 @@ class TreePresenter implements Presenter
      */
     public function present($view)
     {
+        return $this->presentRecursive($view, true);
+    }
+
+    protected function presentRecursive($view, $is_root = false)
+    {
         if ($view instanceof TreeView == false) {
             return $this->presenter->present($view);
         }
 
         foreach ($view->getChildren() as $child)
         {
-            $content = $this->present($child);
-            $child->setContent($content);
+            $this->presentRecursive($child);
         }
 
         /* delegate the actual presentation to the presenter */
-        return $this->presenter->present($view);
+        $content = $this->presenter->present($view);
+        $view->setContent($content);
+
+        if ($is_root) {
+            return $content;
+        }
     }
 }
