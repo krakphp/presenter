@@ -2,95 +2,121 @@
 
 namespace Krak\Presenter;
 
-use RuntimeException;
+use Krak\Presenter\Exception\FileNotFoundException;
+use Krak\Presenter\View\View;
+use InvalidArgumentException;
+use Symfony\Component\Config\FileLocator;
 
-class ViewPresenter extends AbstractPresenter
+class ViewPresenter implements Presenter
 {
-    protected static $cfg;
-    
-    protected $view_file    = '';
-    protected $view_output  = '';
-        
     /**
-     * Sets the view file name
-     * @return $this
+     * @var FileLocator
      */
-    public function setViewFile($file)
-    {
-        $this->view_file = $file;
-        return $this;
-    }
-    
+    protected $locator;
+
     /**
-     * Returns the view file name
+     * @var string
+     */
+    protected $ext;
+
+    /**
+     * @var string
+     */
+    protected $view_alias;
+
+    /**
+     * @param FileLocator $locator
+     * @param string $ext
+     * @param string $view_alias
+     */
+    public function __construct(FileLocator $locator, $ext = '', $view_alias = 'view')
+    {
+        $this->locator = $locator;
+        $this->setExtension($ext);
+        $this->setViewAlias($view_alias);
+    }
+
+    /**
+     * @param string $alias
+     */
+    public function setViewAlias($alias)
+    {
+        if (!preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $alias)) {
+            throw new InvalidArgumentException(
+                sprintf("alias '%s' is not a valid alias", $alias)
+            );
+        }
+
+        $this->view_alias = $alias;
+    }
+
+    /**
      * @return string
      */
-    public function getViewFile()
+    public function getViewAlias()
     {
-        return $this->view_file;
+        return $this->view_alias;
     }
-    
+
     /**
-     * Set the necessary config for the ViewFilePresenter
+     * @param string $ext
      */
-    public static function setConfig(array $cfg)
+    public function setExtension($ext)
     {
-        /* @TODO - validate config */
-        self::$cfg = $cfg;
+        $this->ext = $ext;
     }
-    
+
     /**
-     * @inheritDoc
+     * @return string
      */
-    public function build()
+    public function getExtension()
     {
-        $path = $this->getViewPath($this->getViewFile());
-        
-        if (!file_exists($path)) {
-            throw new Exception\FileNotFoundException($path);
+        return $this->ext;
+    }
+
+    /**
+     * Presents a View object
+     * @var View $view
+     * @return string
+     */
+    public function present($view)
+    {
+        if ($view instanceof View == false) {
+            throw new InvalidArgumentException(
+                'expected view to be an instance of Krak\\Presenter\\View'
+            );
         }
-        
+
+        $ext = ($this->ext) ? '.' . $this->ext : '';
+
+        $file = $view->getViewFile() . $ext;
+
+        try {
+            $file = $this->locator->locate($file);
+        } catch (InvalidArgumentException $e) {
+            throw new FileNotFoundException($e->getMessage());
+        }
+
+        /* we have the file, so let's load up the view */
+        return self::loadView($file, $view, $this->view_alias);
+    }
+
+    /**
+     * Self contained view loader to minimize
+     * any state or variables being included in the view file
+     * @param string $file
+     * @param View $view
+     * @param string $alias
+     * @return string
+     */
+    protected static function loadView($file, View $view, $alias)
+    {
         ob_start();
-        
-        include $path;
-        
-        $this->view_output = ob_get_clean();
-        return $this;
-    }
-    
-    /**
-     * Gets the full path for a view file name
-     * @return string
-     */
-    public function getViewPath($view_file)
-    {
-        if (!static::$cfg) {
-            throw new RuntimeException('ViewPresenter config has not been set');
-        }
-    
-        return sprintf(
-            "%s/%s.%s",
-            static::$cfg['view_path'],
-            $view_file,
-            static::$cfg['file_ext']
-        );
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public function clear()
-    {
-        unset($this->view_output);
-        $this->view_output = '';
-        return $this;
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        return $this->view_output;
+
+        $$alias = $view;
+
+        include $file;
+
+        return ob_get_clean();
     }
 }

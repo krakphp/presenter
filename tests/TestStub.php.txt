@@ -1,0 +1,14 @@
+<?php
+
+namespace Krak\Tests\xxx;
+
+use Krak\Tests\TestCase;
+
+class yyyTest extends TestCase
+{
+    public function setUp()
+    {}
+
+    public function tearDown()
+    {}
+}

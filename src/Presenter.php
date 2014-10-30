@@ -3,22 +3,15 @@
 namespace Krak\Presenter;
 
 /**
- * Basic inteface to implement a presenter
+ * Presenter
+ * A presenter simply takes data and transforms it into a string
+ * to be presented/displayed
  */
 interface Presenter
 {
     /**
-     * Builds the internal view output. 
+     * @param mixed $data
+     * @return string
      */
-    public function build();
-        
-    /**
-     * clears the internal view output
-     */
-    public function clear();
-    
-    /**
-     * returns the internal view output
-     */
-    public function __toString();
+    public function present($data);
 }
