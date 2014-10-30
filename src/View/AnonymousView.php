@@ -29,7 +29,7 @@ class AnonymousView implements View
      * @param array $data
      * @return AnonymousView
      */
-    public static function create($view_file, $data = [])
+    public static function create($view_file, $data = array())
     {
         return new self($view_file, $data);
     }
