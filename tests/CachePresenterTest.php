@@ -2,13 +2,12 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\CachePresenter;
-use Krak\Presenter\MockPresenter;
-use Krak\Tests\Fixtures\MockCache;
-use Krak\Tests\Fixtures\View\TestCacheableView as TestView;
-use Krak\Tests\TestCase;
-
-use stdClass;
+use Krak\Presenter\CachePresenter,
+    Krak\Presenter\MockPresenter,
+    Krak\Tests\Fixtures\MockCache,
+    Krak\Tests\Fixtures\View\TestCacheableView as TestView,
+    Krak\Tests\TestCase,
+    stdClass;
 
 class CachePresenterTest extends TestCase
 {
@@ -68,5 +67,10 @@ class CachePresenterTest extends TestCase
         $content = $this->p->present($view);
 
         $this->assertEquals('not-data', $content);
+    }
+
+    public function testCanPresent()
+    {
+        $this->assertFalse($this->p->canPresent('value'));
     }
 }

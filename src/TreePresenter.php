@@ -34,6 +34,11 @@ class TreePresenter implements Presenter
         return $this->presentRecursive($view, true);
     }
 
+    public function canPresent($view)
+    {
+        return $this->presenter->canPresent($view);
+    }
+
     protected function presentRecursive($view, $is_root = false)
     {
         if ($view instanceof TreeView == false) {

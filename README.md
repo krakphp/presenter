@@ -7,7 +7,7 @@ Simple yet powerful implementation of the presenter pattern.
 
 install via composer.
 
-```json
+```javascript
 {
     "repositories": [
         {
@@ -17,14 +17,59 @@ install via composer.
     ],
     "require": {
         "krak/presenter": "~2.0",
-        "doctrine/cache": "~1.0" // only if you use the CachePresenter
+
+        /* only if you use the CachePresenter */
+        "doctrine/cache": "~1.0",
+
+        /* include if you use the EventListener\ViewListener */
+        "symfony/event-dispatcher": "~2.0",
+        "symfony/http-kernel": "~2.0",
+        "symfony/http-foundation": "~2.0",
+
+        /* include if you use the Provider\ViewPresenterServiceProvider */
+        "pimple/pimple": "~3.0"
     }
 }
 ```
 
-## Usage
+## Design
 
-Krak Presenter library comes bundled with 2 different presenters: View and Mock.
+The Krak Presenters are broken up into 3 main components: Presenters, Decorators, and View Models.
+
+The Presenters and Decorators all implement the `Presenter` interface:
+
+```php
+interface Presenter
+{
+    /**
+     * Present the view and return the content associated with it
+     * @param mixed $view
+     * @return string
+     */
+    public function present($view);
+
+    /**
+     * Whether or not the presenter can actually present the data/view
+     * @param mixed $data
+     * @return bool
+     */
+    public function canPresent($view);
+}
+```
+
+A presenter/decorator will accept a view model to present and then return it's contents.
+
+So the call
+
+```php
+$content = $presenter->present($view);
+```
+
+will always return the content associated with view.
+
+## Presenters
+
+The Presenters will take view models and "present" them i.e. render them into a string response. This library comes bundled with 2 different presenters: View and Mock.
 
 The View presenter will take a View model and return the appropriate content from the view file associated with the View model.
 
@@ -156,7 +201,7 @@ the output will be true because the cache presenter added the data to the cache,
 
 Now, the CachePresenter will only cache views models that implement the `CacheableView` interface.
 
-### TreeViews
+### Tree
 
 The tree presenter is another decorator that allows a hierarchy/tree of views to be presented. A tree presenter will only traverse a tree of views if they implement the `TreeView` interface. One important note about the tree view is how it handles the presenting of multiple items at once.
 
@@ -350,4 +395,61 @@ First, we'll assume that each view has the same instance of a buffer as a public
 <div>
     <!-- content -->
 </div>
+```
+
+## View Listener
+
+If you use a project that is based off of the [Symfony HttpKernel](http://symfony.com/doc/current/components/http_kernel/introduction.html), you can register the view listener so that your controllers can return views and have them converted to responses.
+
+```php
+use Krak\Presenter\EventListener\ViewListener,
+    Krak\Presenter\ViewPresenter;
+
+$view_presenter = ...
+$listener = new ViewListener($view_presenter);
+
+/* dispatcher instanceof Symfony\Component\EventDispatcher\EventDispatcher */
+$dispatcher->addSubscriber($listener);
+```
+
+Then in your controllers, you can just return a view model like so, and it will be converted to a response
+
+```php
+    public function showAction()
+    {
+        // ...
+
+        /* instanceof Krak\Presenter\View\View */
+        return new ViewModel();
+    }
+```
+
+## Service Provider
+
+If you use [Pimple](http://pimple.sensiolabs.org) in your projects, you can use the `ViewPresenterServiceProvider` to register the view presenter as a service.
+
+```php
+$container->register(new ViewPresenterServiceProvider(), [
+    'presenter.ext' => 'php',
+    'presenter.view_alias' => 'view',
+    'presenter.paths' => [__DIR__],
+    // instead of paths, you can also just specify the file locator
+    'presenter.file_locator' => function() {
+        return new Symfony\Component\Config\FileLocator([__DIR__]);
+    }
+]);
+
+$locator = $container['presenter.file_locator'];
+$presenter = $container['presenter'];
+```
+
+If you want to use decorators, then you can use the `Pimple::extend` method like so:
+
+```php
+use Krak\Presenter\TreePresenter;
+
+$container->extend('presenter', function($presenter, $c)
+{
+    return new TreePresenter($presenter);
+});
 ```

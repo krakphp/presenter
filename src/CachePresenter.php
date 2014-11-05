@@ -2,8 +2,8 @@
 
 namespace Krak\Presenter;
 
-use Doctrine\Common\Cache\Cache;
-use Krak\Presenter\View\CacheableView;
+use Doctrine\Common\Cache\Cache,
+    Krak\Presenter\View\CacheableView;
 
 /**
  * Cache Presenter
@@ -55,5 +55,13 @@ class CachePresenter implements Presenter
         $this->cache->save($key, $contents, $ttl);
 
         return $contents;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canPresent($data)
+    {
+        return $this->presenter->canPresent($data);
     }
 }

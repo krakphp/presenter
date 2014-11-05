@@ -2,11 +2,11 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\MockPresenter;
-use Krak\Tests\TestCase;
-
-use RuntimeException;
-use stdClass;
+use Krak\Presenter\Exception\CannotPresentException,
+    Krak\Presenter\MockPresenter,
+    Krak\Tests\TestCase,
+    RuntimeException,
+    stdClass;
 
 class MockPresenterTest extends TestCase
 {
@@ -51,11 +51,8 @@ class MockPresenterTest extends TestCase
         try {
             $p->present($obj);
             $this->assertTrue(false, 'did not throw an exception');
-        } catch (RuntimeException $e) {
-            $this->assertEquals(
-                'object provided was not in storage',
-                $e->getMessage()
-            );
+        } catch (CannotPresentException $e) {
+            $this->assertTrue(true);
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Krak\Tests\View;
 
-use Krak\Presenter\View\AnonymousView;
-use Krak\Tests\TestCase;
+use Krak\Presenter\View\AnonymousView,
+    Krak\Tests\TestCase;
 
 class AnonymousViewTest extends TestCase
 {

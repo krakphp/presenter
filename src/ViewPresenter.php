@@ -2,10 +2,11 @@
 
 namespace Krak\Presenter;
 
-use Krak\Presenter\Exception\FileNotFoundException;
-use Krak\Presenter\View\View;
-use InvalidArgumentException;
-use Symfony\Component\Config\FileLocator;
+use Krak\Presenter\Exception\CannotPresentException,
+    Krak\Presenter\Exception\FileNotFoundException,
+    Krak\Presenter\View\View,
+    InvalidArgumentException,
+    Symfony\Component\Config\FileLocator;
 
 class ViewPresenter implements Presenter
 {
@@ -81,8 +82,9 @@ class ViewPresenter implements Presenter
      */
     public function present($view)
     {
-        if ($view instanceof View == false) {
-            throw new InvalidArgumentException(
+        if (!$this->canPresent($view)) {
+            throw new CannotPresentException(
+                'ViewPresenter',
                 'expected view to be an instance of Krak\\Presenter\\View'
             );
         }
@@ -99,6 +101,11 @@ class ViewPresenter implements Presenter
 
         /* we have the file, so let's load up the view */
         return self::loadView($file, $view, $this->view_alias);
+    }
+
+    public function canPresent($view)
+    {
+        return $view instanceof View;
     }
 
     /**
