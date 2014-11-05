@@ -2,8 +2,8 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\Buffer;
-use Krak\Tests\TestCase;
+use Krak\Presenter\Buffer,
+    Krak\Tests\TestCase;
 
 class BufferTest extends TestCase
 {

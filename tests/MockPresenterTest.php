@@ -2,12 +2,11 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\Exception\CannotPresentException;
-use Krak\Presenter\MockPresenter;
-use Krak\Tests\TestCase;
-
-use RuntimeException;
-use stdClass;
+use Krak\Presenter\Exception\CannotPresentException,
+    Krak\Presenter\MockPresenter,
+    Krak\Tests\TestCase,
+    RuntimeException,
+    stdClass;
 
 class MockPresenterTest extends TestCase
 {

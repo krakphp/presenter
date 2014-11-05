@@ -2,13 +2,12 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\CachePresenter;
-use Krak\Presenter\MockPresenter;
-use Krak\Tests\Fixtures\MockCache;
-use Krak\Tests\Fixtures\View\TestCacheableView as TestView;
-use Krak\Tests\TestCase;
-
-use stdClass;
+use Krak\Presenter\CachePresenter,
+    Krak\Presenter\MockPresenter,
+    Krak\Tests\Fixtures\MockCache,
+    Krak\Tests\Fixtures\View\TestCacheableView as TestView,
+    Krak\Tests\TestCase,
+    stdClass;
 
 class CachePresenterTest extends TestCase
 {

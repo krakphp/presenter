@@ -2,11 +2,11 @@
 
 namespace Krak\Presenter;
 
-use Krak\Presenter\Exception\FileNotFoundException;
-use Krak\Presenter\Exception\CannotPresentException;
-use Krak\Presenter\View\View;
-use InvalidArgumentException;
-use Symfony\Component\Config\FileLocator;
+use Krak\Presenter\Exception\CannotPresentException,
+    Krak\Presenter\Exception\FileNotFoundException,
+    Krak\Presenter\View\View,
+    InvalidArgumentException,
+    Symfony\Component\Config\FileLocator;
 
 class ViewPresenter implements Presenter
 {

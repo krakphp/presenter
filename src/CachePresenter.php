@@ -2,8 +2,8 @@
 
 namespace Krak\Presenter;
 
-use Doctrine\Common\Cache\Cache;
-use Krak\Presenter\View\CacheableView;
+use Doctrine\Common\Cache\Cache,
+    Krak\Presenter\View\CacheableView;
 
 /**
  * Cache Presenter

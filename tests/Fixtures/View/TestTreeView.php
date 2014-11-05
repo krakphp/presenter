@@ -2,8 +2,8 @@
 
 namespace Krak\Tests\Fixtures\View;
 
-use Krak\Presenter\View\TreeView;
-use Krak\Presenter\View\TreeViewTrait;
+use Krak\Presenter\View\TreeView,
+    Krak\Presenter\View\TreeViewTrait;
 
 class TestTreeView implements TreeView
 {

@@ -2,8 +2,8 @@
 
 namespace Krak\Tests\View;
 
-use Krak\Tests\Fixtures\View\TestTraitTreeView as TestView;
-use Krak\Tests\TestCase;
+use Krak\Tests\Fixtures\View\TestTraitTreeView as TestView,
+    Krak\Tests\TestCase;
 
 class TreeViewTest extends TestCase
 {

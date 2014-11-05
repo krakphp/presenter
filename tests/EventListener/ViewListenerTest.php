@@ -2,16 +2,14 @@
 
 namespace Krak\Tests\EventListener;
 
-use Krak\Presenter\EventListener\ViewListener;
-use Krak\Presenter\MockPresenter;
-use Krak\Tests\TestCase;
-
-use StdClass;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent as Event;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Krak\Presenter\EventListener\ViewListener,
+    Krak\Presenter\MockPresenter,
+    Krak\Tests\TestCase,
+    StdClass,
+    Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent as Event,
+    Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ViewListenerTest extends TestCase
 {

@@ -2,13 +2,12 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\MockPresenter;
-use Krak\Presenter\TreePresenter;
-use Krak\Tests\Fixtures\View\TestTreeChildView as TestChildView;
-use Krak\Tests\Fixtures\View\TestTreeView as TestView;
-use Krak\Tests\TestCase;
-
-use stdClass;
+use Krak\Presenter\MockPresenter,
+    Krak\Presenter\TreePresenter,
+    Krak\Tests\Fixtures\View\TestTreeChildView as TestChildView,
+    Krak\Tests\Fixtures\View\TestTreeView as TestView,
+    Krak\Tests\TestCase,
+    stdClass;
 
 class TreePresenterTest extends TestCase
 {

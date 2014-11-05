@@ -2,15 +2,14 @@
 
 namespace Krak\Tests;
 
-use Krak\Presenter\Exception\FileNotFoundException;
-use Krak\Presenter\Exception\CannotPresentException;
-use Krak\Presenter\View\AnonymousView;
-use Krak\Presenter\ViewPresenter;
-use Krak\Tests\Fixtures\View\TestView;
-use Krak\Tests\TestCase;
-
-use InvalidArgumentException;
-use Symfony\Component\Config\FileLocator;
+use Krak\Presenter\Exception\FileNotFoundException,
+    Krak\Presenter\Exception\CannotPresentException,
+    Krak\Presenter\View\AnonymousView,
+    Krak\Presenter\ViewPresenter,
+    Krak\Tests\Fixtures\View\TestView,
+    Krak\Tests\TestCase,
+    InvalidArgumentException,
+    Symfony\Component\Config\FileLocator;
 
 class ViewPresenterTest extends TestCase
 {

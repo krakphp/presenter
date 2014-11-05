@@ -2,8 +2,8 @@
 
 namespace Krak\Tests\View;
 
-use Krak\Tests\Fixtures\View\TestView;
-use Krak\Tests\TestCase;
+use Krak\Tests\Fixtures\View\TestView,
+    Krak\Tests\TestCase;
 
 class ViewTest extends TestCase
 {

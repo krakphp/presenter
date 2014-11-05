@@ -2,10 +2,9 @@
 
 namespace Krak\Presenter;
 
-use Krak\Presenter\Exception\CannotPresentException;
-
-use RuntimeException;
-use SplObjectStorage;
+use Krak\Presenter\Exception\CannotPresentException,
+    RuntimeException,
+    SplObjectStorage;
 
 /**
  * Mock Presenter
