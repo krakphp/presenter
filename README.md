@@ -26,7 +26,7 @@ install via composer.
         "symfony/http-kernel": "~2.0",
         "symfony/http-foundation": "~2.0",
 
-        /* include if you use the Provider\ViewPresenterServiceProvder */
+        /* include if you use the Provider\ViewPresenterServiceProvider */
         "pimple/pimple": "~3.0"
     }
 }
@@ -386,8 +386,6 @@ First, we'll assume that each view has the same instance of a buffer as a public
 If you use a project that is based off of the [Symfony HttpKernel](http://symfony.com/doc/current/components/http_kernel/introduction.html), you can register the view listener so that your controllers can return views and have them converted to responses.
 
 ```php
-<?php
-
 use Krak\Presenter\EventListener\ViewListener,
     Krak\Presenter\ViewPresenter;
 
@@ -408,4 +406,23 @@ Then in your controllers, you can just return a view model like so, and it will 
         /* instanceof Krak\Presenter\View\View */
         return new ViewModel();
     }
+```
+
+## Service Provider
+
+If you use [Pimple](http://pimple.sensiolabs.org) in your projects, you can use the `ViewPresenterServiceProvider` to register the view presenter as a service.
+
+```php
+$app->register(new ViewPresenterServiceProvider(), [
+    'presenter.ext' => 'php',
+    'presenter.view_alias' => 'view',
+    'presenter.paths' => [__DIR__],
+    // instead of paths, you can also just specify the file locator
+    'presenter.file_locator' => function() {
+        return new Symfony\Component\Config\FileLocator([__DIR__]);
+    }
+]);
+
+$locator = $app['presenter.file_locator'];
+$presenter = $app['presenter'];
 ```
