@@ -32,9 +32,44 @@ install via composer.
 }
 ```
 
-## Usage
+## Design
 
-Krak Presenter library comes bundled with 2 different presenters: View and Mock.
+The Krak Presenters are broken up into 3 main components: Presenters, Decorators, and View Models.
+
+The Presenters and Decorators all implement the `Presenter` interface:
+
+```php
+interface Presenter
+{
+    /**
+     * Present the view and return the content associated with it
+     * @param mixed $view
+     * @return string
+     */
+    public function present($view);
+
+    /**
+     * Whether or not the presenter can actually present the data/view
+     * @param mixed $data
+     * @return bool
+     */
+    public function canPresent($view);
+}
+```
+
+A presenter/decorator will accept a view model to present and then return it's contents.
+
+So the call
+
+```php
+$content = $presenter->present($view);
+```
+
+will always return the content associated with view.
+
+## Presenters
+
+The Presenters will take view models and "present" them i.e. render them into a string response. This library comes bundled with 2 different presenters: View and Mock.
 
 The View presenter will take a View model and return the appropriate content from the view file associated with the View model.
 
@@ -131,25 +166,6 @@ the output will be
 
 The presenter system is designed around the `Presenter` interface which makes the use of decorators very easily.
 
-```php
-<?php
-
-interface Presenter
-{
-    /**
-     * @param mixed $data
-     * @return string
-     */
-    public function present($data);
-
-    /**
-     * @param mixed $data
-     * @return bool
-     */
-    public function canPresent($data);
-}
-```
-
 This library comes with two decorators: Cache and Tree.
 
 ### Caching
@@ -185,7 +201,7 @@ the output will be true because the cache presenter added the data to the cache,
 
 Now, the CachePresenter will only cache views models that implement the `CacheableView` interface.
 
-### TreeViews
+### Tree
 
 The tree presenter is another decorator that allows a hierarchy/tree of views to be presented. A tree presenter will only traverse a tree of views if they implement the `TreeView` interface. One important note about the tree view is how it handles the presenting of multiple items at once.
 
@@ -413,7 +429,7 @@ Then in your controllers, you can just return a view model like so, and it will 
 If you use [Pimple](http://pimple.sensiolabs.org) in your projects, you can use the `ViewPresenterServiceProvider` to register the view presenter as a service.
 
 ```php
-$app->register(new ViewPresenterServiceProvider(), [
+$container->register(new ViewPresenterServiceProvider(), [
     'presenter.ext' => 'php',
     'presenter.view_alias' => 'view',
     'presenter.paths' => [__DIR__],
@@ -423,6 +439,17 @@ $app->register(new ViewPresenterServiceProvider(), [
     }
 ]);
 
-$locator = $app['presenter.file_locator'];
-$presenter = $app['presenter'];
+$locator = $container['presenter.file_locator'];
+$presenter = $container['presenter'];
+```
+
+If you want to use decorators, then you can use the `Pimple::extend` method like so:
+
+```php
+use Krak\Presenter\TreePresenter;
+
+$container->extend('presenter', function($presenter, $c)
+{
+    return new TreePresenter($presenter);
+});
 ```
