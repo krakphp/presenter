@@ -3,6 +3,7 @@
 namespace Krak\Tests;
 
 use Krak\Presenter\Exception\FileNotFoundException;
+use Krak\Presenter\Exception\CannotPresentException;
 use Krak\Presenter\View\AnonymousView;
 use Krak\Presenter\ViewPresenter;
 use Krak\Tests\Fixtures\View\TestView;
@@ -67,11 +68,8 @@ class ViewPresenterTest extends TestCase
         try {
             $p->present('data');
             $this->assertTrue(false, 'did not throw an exception');
-        } catch (InvalidArgumentException $e) {
-            $this->assertEquals(
-                'expected view to be an instance of Krak\\Presenter\\View',
-                $e->getMessage()
-            );
+        } catch (CannotPresentException $e) {
+            $this->assertTrue(true);
         }
     }
 

@@ -14,4 +14,10 @@ interface Presenter
      * @return string
      */
     public function present($data);
+
+    /**
+     * @param mixed $data
+     * @return bool
+     */
+    public function canPresent($data);
 }

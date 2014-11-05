@@ -54,4 +54,9 @@ class TreePresenterTest extends TestCase
 
         $this->assertEquals('child', $child->getContent());
     }
+
+    public function testCanPresent()
+    {
+        $this->assertFalse($this->p->canPresent('data'));
+    }
 }

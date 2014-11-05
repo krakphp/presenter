@@ -2,6 +2,8 @@
 
 namespace Krak\Presenter;
 
+use Krak\Presenter\Exception\CannotPresentException;
+
 use RuntimeException;
 use SplObjectStorage;
 
@@ -44,10 +46,22 @@ class MockPresenter implements Presenter
      */
     public function present($obj)
     {
-        if (!isset($this->storage[$obj])) {
-            throw new RuntimeException('object provided was not in storage');
+        if (!$this->canPresent($obj)) {
+            throw new CannotPresentException(
+                'MockPresenter',
+                'object was not found in storage'
+            );
         }
 
         return $this->storage[$obj];
+    }
+
+    public function canPresent($obj)
+    {
+        if (!is_object($obj) || !isset($this->storage[$obj])) {
+            return false;
+        }
+
+        return true;
     }
 }

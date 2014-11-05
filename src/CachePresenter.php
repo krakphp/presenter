@@ -56,4 +56,12 @@ class CachePresenter implements Presenter
 
         return $contents;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function canPresent($data)
+    {
+        return $this->presenter->canPresent($data);
+    }
 }

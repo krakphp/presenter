@@ -69,4 +69,9 @@ class CachePresenterTest extends TestCase
 
         $this->assertEquals('not-data', $content);
     }
+
+    public function testCanPresent()
+    {
+        $this->assertFalse($this->p->canPresent('value'));
+    }
 }

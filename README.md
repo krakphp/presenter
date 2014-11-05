@@ -7,7 +7,7 @@ Simple yet powerful implementation of the presenter pattern.
 
 install via composer.
 
-```json
+```javascript
 {
     "repositories": [
         {
@@ -17,7 +17,17 @@ install via composer.
     ],
     "require": {
         "krak/presenter": "~2.0",
-        "doctrine/cache": "~1.0" // only if you use the CachePresenter
+
+        /* only if you use the CachePresenter */
+        "doctrine/cache": "~1.0",
+
+        /* include if you use the EventListener\ViewListener */
+        "symfony/event-dispatcher": "~2.0",
+        "symfony/http-kernel": "~2.0",
+        "symfony/http-foundation": "~2.0",
+
+        /* include if you use the Provider\ViewPresenterServiceProvder */
+        "pimple/pimple": "~3.0"
     }
 }
 ```
@@ -120,6 +130,25 @@ the output will be
 ## Decorators
 
 The presenter system is designed around the `Presenter` interface which makes the use of decorators very easily.
+
+```php
+<?php
+
+interface Presenter
+{
+    /**
+     * @param mixed $data
+     * @return string
+     */
+    public function present($data);
+
+    /**
+     * @param mixed $data
+     * @return bool
+     */
+    public function canPresent($data);
+}
+```
 
 This library comes with two decorators: Cache and Tree.
 
@@ -350,4 +379,33 @@ First, we'll assume that each view has the same instance of a buffer as a public
 <div>
     <!-- content -->
 </div>
+```
+
+## View Listener
+
+If you use a project that is based off of the [Symfony HttpKernel](http://symfony.com/doc/current/components/http_kernel/introduction.html), you can register the view listener so that your controllers can return views and have them converted to responses.
+
+```php
+<?php
+
+use Krak\Presenter\EventListener\ViewListener,
+    Krak\Presenter\ViewPresenter;
+
+$view_presenter = ...
+$listener = new ViewListener($view_presenter);
+
+/* dispatcher instanceof Symfony\Component\EventDispatcher\EventDispatcher */
+$dispatcher->addSubscriber($listener);
+```
+
+Then in your controllers, you can just return a view model like so, and it will be converted to a response
+
+```php
+    public function showAction()
+    {
+        // ...
+
+        /* instanceof Krak\Presenter\View\View */
+        return new ViewModel();
+    }
 ```
