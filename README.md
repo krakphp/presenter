@@ -97,7 +97,7 @@ Above is a typical example of what a presenter would look like you in your appli
 /* set the config */
 Krak\Presenter\ViewPresenter::setConfig([
     'view_path' => 'app/views',
-    'file_ext'  => 'php'
+    'file_ext'  => 'php',
 ]);
 
 ````
@@ -130,6 +130,7 @@ use Krak\Presenter;
 Presenter\ViewPresenter::setConfig(array(
     'view_path' => 'some-path/without/trailing/slash',
     'file_ext'  => 'php', // e.g. php, html.php, html.twig
+    'view_alias' => 'vm', // set to empty string if you don't want an alias
 ));
 
 /* start using the view presenters */
@@ -145,7 +146,8 @@ Using the Home\Index Presenter created above, here's what a view file could look
     <p><?=$this->escape($this->info)?></p>
 
     <div class="list">
-        <?php foreach($this->genDataRows() as $row): ?>
+        <?php // $vm is an alias to $this ?>
+        <?php foreach($vm->genDataRows() as $row): ?>
         <div>
             <h2><?=$row['header']?></h2>
             <p><?=$row['content']?></p>
