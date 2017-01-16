@@ -3,11 +3,15 @@ Krak Presenter
 
 Simple yet powerful implementation of the presenter pattern.
 
+## Installation
+
+Install with composer at `krak/presenter`
+
 ## Design
 
 A Krak Presenter is a class that implements the Presenter interface. Currently, the only presenter base class bundled with the library is the ViewPresenter.
 
-However, the Krak Presenter can easily be implemented so that you can present from the database, view files, sftp server, or anywhere else that makes sense. 
+However, the Krak Presenter can easily be implemented so that you can present from the database, view files, sftp server, or anywhere else that makes sense.
 
 ## Usage
 
@@ -28,14 +32,14 @@ class Index extends Presenter\ViewPresenter
     public $header;
     public $info;
     public $data;
-    
+
     public function __construct()
     {
         $this->setViewFile(
             $this->initViewFile()
         );
     }
-    
+
     public function setHeader($header)
     {
         $this->header = $header;
@@ -51,7 +55,7 @@ class Index extends Presenter\ViewPresenter
         $this->data = $data;
         return $this;
     }
-    
+
     public function genDataRows()
     {
         foreach ($this->data as $row)
@@ -62,12 +66,12 @@ class Index extends Presenter\ViewPresenter
             ];
         }
     }
-    
+
     public function escape($data)
     {
         return htmlspecialchars($data);
     }
-    
+
     private function initViewFile()
     {
         if ($global_var_is_set) {
@@ -79,7 +83,7 @@ class Index extends Presenter\ViewPresenter
         else if ($is_mobile) {
             return 'view-file-3';
         }
-        
+
         throw new \Exception('View file could not be specified');
     }   
 }
@@ -108,7 +112,7 @@ $v->setTitle('Home')
     ->setInfo('I like using presenters')
     ->setData(get_data_from_some_where())
     ->build();
-    
+
 echo $v;
 ````
 
@@ -137,9 +141,9 @@ Using the Home\Index Presenter created above, here's what a view file could look
 <?php // view file ?>
 <div id="content">
     <h1><?=$this->header?></h1>
-    
+
     <p><?=$this->escape($this->info)?></p>
-    
+
     <div class="list">
         <?php foreach($this->genDataRows() as $row): ?>
         <div>
